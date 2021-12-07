@@ -74,8 +74,16 @@ fetch("http://localhost:3000/api/products/"+id)
     } else {
         panier = JSON.parse (panier)
     }
-    
-    panier.push(selectedProduct);
+
+    for (let i = 0; i < panier.length; i++) {
+        if (panier [i].id === selectedProduct.selectedId && panier[i].color === selectedProduct.
+            selectedColors){
+            panier[i].nbArticles += panier.nbArticles;
+            notfound = false;  
+            if (notfound) {panier.push(selectedProduct);}
+        panier.push(selectedProduct);  
+            }
+    }
 
     localStorage.setItem("panier", JSON.stringify(panier))
 

@@ -1,19 +1,3 @@
-function saveBasket(id){
-    localStorage.setItem("products",JSON.stringify());
-}
-
-function getBasket() {
-    
-    let basket = localStorage.getItem("products");
-    if (basket == null) {
-        return [];
-     } 
-     else {
-       return JSON.parse(basket);
-   }
-
-}
-
 let params = (new URL(document.location)).searchParams;
 let id = params.get('id'); 
 console.log(id)
@@ -41,7 +25,6 @@ fetch("http://localhost:3000/api/products/"+id)
     const colors = document.getElementById('colors');
     colors.setAttribute("id","colors");
 
-
     // choix des couleurs
     for (number in data.colors) {
       colors.options[colors.options.length] = new Option(
@@ -54,41 +37,50 @@ fetch("http://localhost:3000/api/products/"+id)
   // Création de l'événement au clique pour ajouter au panier
    const button = document.querySelector('#addToCart');
    button.addEventListener("click", function() {
-
+ 
+   console.log(document.querySelector("#colors").value)
     let selectedProduct = { 
     selectedImage : document.getElementById("image").src, 
     selectedAlttxt : document.getElementById ("image").alt,
     selectedName : document.getElementById("name").textContent,
     selectedPrice : document.getElementById("price").textContent,
     selectedId : id,
-    selectedColors : document.querySelector("#colors").Value,
-    selectedQuantity :(document.querySelector("#quantity").value),
+    selectedColors : document.querySelector("#colors").value,
+    selectedQuantity : (document.querySelector("#quantity").value),
 
 }
-
    let panier = localStorage.getItem("panier");
-   console.log(selectedProduct);
-   console.log(panier)
-    if (panier === null ) {
+   //console.log(selectedProduct);
+  // console.log(panier)
+     if (panier === null ) {
         panier = [];
     } else {
-        panier = JSON.parse (panier)
+        panier = JSON.parse (panier);
     }
+
+    let notFound = true
 
     for (let i = 0; i < panier.length; i++) {
-        if (panier [i].id === selectedProduct.selectedId && panier[i].color === selectedProduct.
-            selectedColors){
-            panier[i].nbArticles += panier.nbArticles;
-            notfound = false;  
-            if (notfound) {panier.push(selectedProduct);}
-        panier.push(selectedProduct);  
-            }
+        console.log(panier[i].selectedId)
+        console.log(selectedProduct.selectedId)
+        console.log(panier[i].selectedColors)
+        console.log(selectedProduct.selectedColors)
+  
+    if (panier[i].selectedId === selectedProduct.selectedId && panier[i].selectedColors === selectedProduct.selectedColors) {
+        panier[i].selectedQuantity += selectedProduct.selectedQuantity;
+        console.log(panier[i].selectedQuantity)
+        console.log(selectedProduct.selectedQuantity)
+        notFound = false;  
+        console.log("trouvé") 
+        }
     }
-
+    
+    if (notFound) {panier.push(selectedProduct)}
+   
     localStorage.setItem("panier", JSON.stringify(panier))
 
     let addConfirm = () => {
         alert('Le produit a bien été ajouté au panier');
       }
-
-})
+    }
+    )

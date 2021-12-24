@@ -46,7 +46,7 @@ fetch("http://localhost:3000/api/products/"+id)
     selectedPrice : document.getElementById("price").textContent,
     selectedId : id,
     selectedColors : document.querySelector("#colors").value,
-    selectedQuantity : (document.querySelector("#quantity").value),
+    selectedQuantity : parseInt(document.querySelector("#quantity").value),
 
 }
    let panier = localStorage.getItem("panier");
@@ -79,8 +79,6 @@ fetch("http://localhost:3000/api/products/"+id)
    
     localStorage.setItem("panier", JSON.stringify(panier))
 
-    let addConfirm = () => {
-        alert('Le produit a bien été ajouté au panier');
-      }
-    }
+     alert('Le produit a bien été ajouté au panier')}
+
     )
